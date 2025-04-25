@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::body},~{::title})">
+<head><title>Inicio</title></head>
+
+<body>
+<div th:fragment="title">Inicio</div>
+
+<div th:fragment="body">
+
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+
+    <!-- Tarjeta IPS -->
+    <div class="col">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">Gestión de IPS</h5>
+          <p class="card-text">
+            <strong>RF1 – RF4 – RF8</strong><br/>
+            • Registrar IPS contratadas.<br/>
+            • Asignar servicios, médicos y registrar prestaciones.<br/>
+          </p>
+          <a href="/web/ips" class="btn btn-primary">Ir a IPS</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjeta Servicios EPS -->
+    <div class="col">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">Servicios de Salud (EPS)</h5>
+          <p class="card-text">
+            <strong>RF2 – RF3 – RF5 – RF6 – RF7</strong><br/>
+            • Registrar servicios ofrecidos.<br/>
+            • Afiliados, órdenes y agendamiento.<br/>
+          </p>
+          <a href="/web/servicios" class="btn btn-primary">Ir a Servicios</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

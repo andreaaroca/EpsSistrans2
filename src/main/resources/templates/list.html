@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::body},~{::title})">
+<head><title>Listado</title></head>
+
+<body>
+<div th:fragment="title" th:text="${titleTable}">Listado</div>
+
+<div th:fragment="body">
+
+  <h2 th:text="${titleTable}">Listado</h2>
+
+  <table class="table table-bordered align-middle">
+    <thead><tr><th th:each="h : ${headers}" th:text="${h}"></th></tr></thead>
+
+    <tbody>
+      <tr th:if="${#lists.isEmpty(rows)}">
+        <td th:colspan="${headers.size()}"
+            class="text-center text-muted">-- Sin registros --</td>
+      </tr>
+
+      <tr th:each="row : ${rows}">
+        <!-- la primera columna es ID, las demás son editables -->
+        <td th:each="cell, iterStat : ${row}"
+            th:text="${cell}"
+            th:data-id="${iterStat.index == 0 ? cell : null}"
+            th:classappend="${iterStat.index == 0} ? 'fw-bold' : ''"
+            th:attr="contenteditable=${iterStat.index > 0}">val</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <a th:if="${addLink != '#'}"
+     th:href="${addLink}"
+     class="btn btn-primary mt-2">Nuevo</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::body},~{::title})">
+<head><title>Nueva Orden</title></head>
+
+<body>
+<div th:fragment="title">Emitir Orden</div>
+<div th:fragment="body">
+  <form action="/ordenes" method="post" class="w-50">
+    <div class="mb-2"><label class="form-label">ID Afiliado</label><input name="idAfiliado" class="form-control"/></div>
+    <div class="mb-2"><label class="form-label">ID Médico</label>  <input name="idMedico"   class="form-control"/></div>
+    <div class="mb-2"><label class="form-label">ID Servicio</label><input name="idServicio" class="form-control"/></div>
+    <button class="btn btn-success">Guardar</button>
+  </form>
+</div>
+</body>
+</html>

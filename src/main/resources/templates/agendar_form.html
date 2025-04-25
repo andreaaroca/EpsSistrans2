@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::body},~{::title})">
+<head><title>Agendar Servicio</title></head>
+
+<body>
+<div th:fragment="title">Agendar Servicio</div>
+<div th:fragment="body">
+
+  <form id="buscar" class="w-50">
+    <div class="mb-2">
+      <label class="form-label">ID&nbsp;Servicio</label>
+      <input name="idServicio" class="form-control"/>
+    </div>
+    <button class="btn btn-primary">Buscar disponibilidad</button>
+  </form>
+
+  <table id="tabla" class="table table-striped mt-3 d-none">
+    <thead>
+      <tr><th>ID Agenda</th><th>Fecha-Hora</th><th>IPS</th><th>Médico</th><th></th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+$("#buscar").on("submit", e=>{
+  e.preventDefault();
+  const idServicio = $("input[name=idServicio]").val();
+  fetch(`/agenda/disponibilidad?idServicio=` + idServicio)
+    .then(r => r.json())
+    .then(data => {
+      const tbody = $("#tabla tbody").empty();
+      data.forEach(a => {
+        const fila = $(`
+          <tr>
+            <td>${a.id}</td><td>${a.fechaHora}</td>
+            <td>${a.ips.nombre}</td><td>${a.medico.nombre}</td>
+            <td><button class='btn btn-success btn-sm'>Agendar</button></td>
+          </tr>`).appendTo(tbody);
+
+        fila.find("button").click(() => {
+          const orden = prompt("Número de orden:");
+          if (!orden) return;
+          fetch(`/citas?idAgenda=${a.id}&idOrden=${orden}`, { method: "POST" })
+            .then(() => { alert("Cita creada"); fila.remove(); })
+            .catch(() => alert("Error al crear cita"));
+        });
+      });
+      $("#tabla").removeClass("d-none");
+    });
+});
+</script>
+</body>
+</html>

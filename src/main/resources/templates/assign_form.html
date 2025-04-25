@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::body},~{::title})">
+<head><title>Asignar Servicio</title></head>
+
+<body>
+<div th:fragment="title">Asignar Servicio&nbsp;a&nbsp;IPS</div>
+<div th:fragment="body">
+
+  <form id="asignarForm" class="w-50">
+    <div class="mb-2">
+      <label class="form-label">IPS</label>
+      <select class="form-select" name="idIps">
+        <option th:each="ips : ${ipses}" th:value="${ips.id}"
+                th:text="${ips.nombre}">IPS A</option>
+      </select>
+    </div>
+
+    <div class="mb-2">
+      <label class="form-label">Servicio</label>
+      <select class="form-select" name="idServicio">
+        <option th:each="s : ${servicios}" th:value="${s.id}"
+                th:text="${s.descripcion}">Consulta</option>
+      </select>
+    </div>
+
+    <button class="btn btn-success">Asignar</button>
+  </form>
+
+  <script>
+    $("#asignarForm").on("submit", function(e){
+      e.preventDefault();
+      const idIps      = $(this).find("[name=idIps]").val();
+      const idServicio = $(this).find("[name=idServicio]").val();
+      fetch(`/ips/${idIps}/servicios/${idServicio}`, { method: "POST" })
+        .then(() => alert("Asignado ✔"))
+        .catch(() => alert("Error"));
+    });
+  </script>
+</div>
+</body>
+</html>
